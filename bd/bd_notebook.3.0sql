@@ -1,0 +1,331 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: 03-Dez-2019 às 02:19
+-- Versão do servidor: 10.1.38-MariaDB
+-- versão do PHP: 7.3.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `bd_notebook`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `funcionarios`
+--
+
+CREATE TABLE `funcionarios` (
+  `id_Fun` int(11) NOT NULL,
+  `nome_Fun` varchar(45) NOT NULL,
+  `cargo_Fun` varchar(20) NOT NULL,
+  `telefone_Fun` varchar(20) NOT NULL,
+  `login_Fun` varchar(45) NOT NULL,
+  `senha_Fun` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `funcionarios`
+--
+
+INSERT INTO `funcionarios` (`id_Fun`, `nome_Fun`, `cargo_Fun`, `telefone_Fun`, `login_Fun`, `senha_Fun`) VALUES
+(1, 'Administrador ', 'Administrador', '91234-5678', 'admin', '123'),
+(2, 'jose', 'estoquista', '9999-9999', 'estoque', '123'),
+(3, 'Maria', 'vendedora', '1111', 'vendas', '123');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `marca`
+--
+
+CREATE TABLE `marca` (
+  `id_Marca` int(11) NOT NULL,
+  `nome_Marca` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `marca`
+--
+
+INSERT INTO `marca` (`id_Marca`, `nome_Marca`) VALUES
+(1, 'Asus'),
+(2, 'Acer'),
+(3, 'CCE'),
+(4, 'Dell'),
+(5, 'HP'),
+(6, 'Lenovo'),
+(7, 'Philco');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `memoria`
+--
+
+CREATE TABLE `memoria` (
+  `id_Memoria` int(11) NOT NULL,
+  `quantidade_Memoria` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `memoria`
+--
+
+INSERT INTO `memoria` (`id_Memoria`, `quantidade_Memoria`) VALUES
+(1, '4GB'),
+(2, '6GB'),
+(3, '8GB');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `notebooks`
+--
+
+CREATE TABLE `notebooks` (
+  `id_Note` int(11) NOT NULL,
+  `preco_Note` double NOT NULL,
+  `id_Marca` int(11) NOT NULL,
+  `id_Memoria` int(11) NOT NULL,
+  `id_Vendas` int(11) DEFAULT NULL,
+  `id_So` int(11) NOT NULL,
+  `id_Processador` int(11) NOT NULL,
+  `id_Tela` int(11) NOT NULL,
+  `carrinho` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `notebooks`
+--
+
+INSERT INTO `notebooks` (`id_Note`, `preco_Note`, `id_Marca`, `id_Memoria`, `id_Vendas`, `id_So`, `id_Processador`, `id_Tela`, `carrinho`) VALUES
+(1, 1000, 1, 1, NULL, 1, 1, 1, NULL),
+(2, 2000, 2, 2, NULL, 2, 2, 2, NULL),
+(3, 1500, 3, 3, NULL, 2, 3, 3, NULL),
+(4, 1600, 4, 2, NULL, 1, 2, 4, NULL),
+(5, 1700, 5, 1, NULL, 2, 3, 4, NULL),
+(6, 1200, 6, 3, NULL, 2, 3, 4, NULL),
+(7, 999, 7, 2, NULL, 2, 1, 3, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `processador`
+--
+
+CREATE TABLE `processador` (
+  `id_Processador` int(11) NOT NULL,
+  `nome_Processador` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `processador`
+--
+
+INSERT INTO `processador` (`id_Processador`, `nome_Processador`) VALUES
+(1, 'Dual Core'),
+(2, 'i3'),
+(3, 'i5');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `sistemaoperacional`
+--
+
+CREATE TABLE `sistemaoperacional` (
+  `id_So` int(11) NOT NULL,
+  `nome_So` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `sistemaoperacional`
+--
+
+INSERT INTO `sistemaoperacional` (`id_So`, `nome_So`) VALUES
+(1, 'Windows'),
+(2, 'Linux');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tela`
+--
+
+CREATE TABLE `tela` (
+  `id_Tela` int(11) NOT NULL,
+  `Tamanho_Tela` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tela`
+--
+
+INSERT INTO `tela` (`id_Tela`, `Tamanho_Tela`) VALUES
+(1, 10),
+(2, 11),
+(3, 13),
+(4, 14);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `vendas`
+--
+
+CREATE TABLE `vendas` (
+  `id_Vendas` int(11) NOT NULL,
+  `data_Vendas` date NOT NULL,
+  `id_Fun` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `funcionarios`
+--
+ALTER TABLE `funcionarios`
+  ADD PRIMARY KEY (`id_Fun`);
+
+--
+-- Indexes for table `marca`
+--
+ALTER TABLE `marca`
+  ADD PRIMARY KEY (`id_Marca`);
+
+--
+-- Indexes for table `memoria`
+--
+ALTER TABLE `memoria`
+  ADD PRIMARY KEY (`id_Memoria`);
+
+--
+-- Indexes for table `notebooks`
+--
+ALTER TABLE `notebooks`
+  ADD PRIMARY KEY (`id_Note`),
+  ADD KEY `fk_Notebooks_Marca1_idx` (`id_Marca`),
+  ADD KEY `fk_Notebooks_Memoria1_idx` (`id_Memoria`),
+  ADD KEY `fk_Notebooks_Vedas1_idx` (`id_Vendas`),
+  ADD KEY `fk_Notebooks_Sistema Operacional1_idx` (`id_So`),
+  ADD KEY `fk_Notebooks_Processador1_idx` (`id_Processador`),
+  ADD KEY `fk_Notebooks_Tela1_idx` (`id_Tela`);
+
+--
+-- Indexes for table `processador`
+--
+ALTER TABLE `processador`
+  ADD PRIMARY KEY (`id_Processador`);
+
+--
+-- Indexes for table `sistemaoperacional`
+--
+ALTER TABLE `sistemaoperacional`
+  ADD PRIMARY KEY (`id_So`);
+
+--
+-- Indexes for table `tela`
+--
+ALTER TABLE `tela`
+  ADD PRIMARY KEY (`id_Tela`);
+
+--
+-- Indexes for table `vendas`
+--
+ALTER TABLE `vendas`
+  ADD PRIMARY KEY (`id_Vendas`),
+  ADD KEY `fk_Vedas_Funcionarios_idx` (`id_Fun`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `funcionarios`
+--
+ALTER TABLE `funcionarios`
+  MODIFY `id_Fun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `marca`
+--
+ALTER TABLE `marca`
+  MODIFY `id_Marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `memoria`
+--
+ALTER TABLE `memoria`
+  MODIFY `id_Memoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `notebooks`
+--
+ALTER TABLE `notebooks`
+  MODIFY `id_Note` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `processador`
+--
+ALTER TABLE `processador`
+  MODIFY `id_Processador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `sistemaoperacional`
+--
+ALTER TABLE `sistemaoperacional`
+  MODIFY `id_So` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tela`
+--
+ALTER TABLE `tela`
+  MODIFY `id_Tela` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `vendas`
+--
+ALTER TABLE `vendas`
+  MODIFY `id_Vendas` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Limitadores para a tabela `notebooks`
+--
+ALTER TABLE `notebooks`
+  ADD CONSTRAINT `fk_Notebooks_Marca1` FOREIGN KEY (`id_Marca`) REFERENCES `marca` (`id_Marca`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Notebooks_Memoria1` FOREIGN KEY (`id_Memoria`) REFERENCES `memoria` (`id_Memoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Notebooks_Processador1` FOREIGN KEY (`id_Processador`) REFERENCES `processador` (`id_Processador`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Notebooks_Sistema Operacional1` FOREIGN KEY (`id_So`) REFERENCES `sistemaoperacional` (`id_So`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Notebooks_Tela1` FOREIGN KEY (`id_Tela`) REFERENCES `tela` (`id_Tela`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Notebooks_Vedas1` FOREIGN KEY (`id_Vendas`) REFERENCES `vendas` (`id_Vendas`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `vendas`
+--
+ALTER TABLE `vendas`
+  ADD CONSTRAINT `fk_Vedas_Funcionarios` FOREIGN KEY (`id_Fun`) REFERENCES `funcionarios` (`id_Fun`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
