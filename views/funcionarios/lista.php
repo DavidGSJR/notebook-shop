@@ -12,10 +12,20 @@
 					<h1 class="text-3xl font-bold text-center text-gray-800">Lista de Funcionários</h1>
 				<p class="mt-2 text-sm text-gray-600">Visão geral dos funcionários cadastrados</p>
 				  </div>
-	
-					<?php
-	
+				<?php
+				if (!empty($_SESSION['flash'])) {
+					$flash = $_SESSION['flash'];
+					unset($_SESSION['flash']);
+					$bg = ($flash['type'] === 'success') ? 'bg-green-50 border-green-400 text-green-700' : (($flash['type'] === 'error') ? 'bg-red-50 border-red-400 text-red-700' : 'bg-blue-50 border-blue-400 text-blue-700');
 					?>
+					<div class="max-w-4xl mx-auto mt-4">
+						<div class="<?php echo $bg; ?> border px-4 py-3 rounded" role="alert">
+							<p class="text-sm"><?php echo htmlspecialchars($flash['message']); ?></p>
+						</div>
+					</div>
+				<?php } ?>
+	
+					
 				  </div>
 			<div class="max-w-6xl mx-auto mt-6">		  
 			<?php

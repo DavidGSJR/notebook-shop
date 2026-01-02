@@ -5,48 +5,43 @@
 	require_once "../../config/database.php";
 ?>
 
-          <div id="conteudo_especifico">
+	<main class="flex-1">
+		  <div id="conteudo_especifico">
                   <div class="max-w-4xl mx-auto text-center">
-                    <h1 class="text-2xl font-semibold">Cadastro de Produtos</h1>
+                    <h1 class="text-3xl font-bold text-gray-800">Cadastro de Produtos</h1>
+					<p class="mt-2 text-sm text-gray-600">Adicione um novo produto ao catálogo.</p>
                   </div>
                   <div class="mb-4">         
                     <?php
-                      include "../../includes/menu_local.php";
+                      // include "../../includes/menu_local.php"; // removido para esconder atalhos nesta tela
                     ?>
                   </div>    
                <div class="max-w-6xl mx-auto mt-6">
                 
-              <table border="0px">
-              <form method="post" action="../../process/produtos/cadastra.php" 
-                              enctype="multipart/form-data">
-              <tr><td>  
-               <label nome="marca"> Marca</label><br> 
-                <select name="marca">             
+
+              <form method="post" action="../../process/produtos/cadastra.php" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                        <label for="marca" class="block text-sm font-medium text-gray-700">Marca</label> 
+                <select id="marca" name="marca" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2">             
           <?php
             $conectar = conectar();   
             
-            $sql_consulta = "SELECT 
-                        id_Marca,
-                        nome_Marca 
-                        FROM 
-                        marca";                      
+            $sql_consulta = "SELECT id_Marca, nome_Marca FROM marca";
             $resultado_consulta = mysqli_query ($conectar, $sql_consulta);
-            
-            $linhas = mysqli_num_rows ($resultado_consulta);
-
             while ($registro_marca = mysqli_fetch_row($resultado_consulta)) {
                   ?>
-           <option value="<?php echo $registro_marca[0];?>"> <?php echo $registro_marca[1]; ?> </option>
+           <option value="<?php echo htmlspecialchars($registro_marca[0]); ?>"><?php echo htmlspecialchars($registro_marca[1]); ?></option>
           <?php
           }
 
           ?>
                  
             </select>
-            </td>                       
-            <td>
-            <label tamanhotela="tamanhotela">Tela</label><br>
-            <select name="tamanhotela">
+                </div>
+                <div>
+            <label for="tamanhotela" class="block text-sm font-medium text-gray-700">Tamanho da Tela</label>
+            <select id="tamanhotela" name="tamanhotela" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2">
             <?php
             $conectar = conectar();   
             
@@ -61,16 +56,17 @@
 
             while ($registro_marca = mysqli_fetch_row($resultado_consulta)) {
                   ?>
-           <option value="<?php echo $registro_marca[0];?>"> <?php echo $registro_marca[1]; ?> </option>
+           <option value="<?php echo htmlspecialchars($registro_marca[0]); ?>"><?php echo htmlspecialchars($registro_marca[1]); ?></option>
           <?php
           }
 
           ?>
-            </select></td>
-         
-           <tr> <td>
-            <label sistemaoperacional="sistemaoperacional">Sistema Operacional</label><br>
-            <select name="sistemaoperacional">
+            </select>
+                </div>
+
+                <div>
+            <label for="sistemaoperacional" class="block text-sm font-medium text-gray-700">Sistema Operacional</label>
+            <select id="sistemaoperacional" name="sistemaoperacional" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2">
            <?php
             $conectar = conectar();   
             
@@ -85,16 +81,16 @@
 
             while ($registro_sistemaOperacional = mysqli_fetch_row($resultado_consulta)) {
                   ?>
-           <option value="<?php echo $registro_sistemaOperacional[0];?>"> <?php echo $registro_sistemaOperacional[1]; ?> </option>
+           <option value="<?php echo htmlspecialchars($registro_sistemaOperacional[0]); ?>"><?php echo htmlspecialchars($registro_sistemaOperacional[1]); ?></option>
           <?php
           }
 
           ?>
-            </select></td>
-            
-            <td>
-            <label memoria="memoria">Memoria</label><br>
-            <select name="memoria">
+            </select>
+                </div>
+                <div>
+            <label for="memoria" class="block text-sm font-medium text-gray-700">Memória</label>
+            <select id="memoria" name="memoria" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2">
              <?php
             $conectar = conectar();   
             
@@ -109,16 +105,17 @@
 
             while ($registro_memoria = mysqli_fetch_row($resultado_consulta)) {
                   ?>
-           <option value="<?php echo $registro_memoria[0];?>"> <?php echo $registro_memoria[1]; ?> </option>
+           <option value="<?php echo htmlspecialchars($registro_memoria[0]); ?>"><?php echo htmlspecialchars($registro_memoria[1]); ?></option>
           <?php
           }
 
           ?>
-            </select> </td></tr>
+            </select>
+                </div>
 
-             <tr><td>
-            <label nome="processador"> Processador</label><br>
-            <select name="processador">
+                <div class="md:col-span-2">
+                        <label for="processador" class="block text-sm font-medium text-gray-700">Processador</label>
+                        <select id="processador" name="processador" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2">
              <?php
             $conectar = conectar();   
             
@@ -133,30 +130,30 @@
 
             while ($registro_processador = mysqli_fetch_row($resultado_consulta)) {
                   ?>
-           <option value="<?php echo $registro_processador[0];?>"> <?php echo $registro_processador[1]; ?> </option>
+           <option value="<?php echo htmlspecialchars($registro_processador[0]); ?>"><?php echo htmlspecialchars($registro_processador[1]); ?></option>
           <?php
           }
 
           ?>
-            </select></td></tr>
+            </select>
+                </div>
 
             
             
-            <tr>
-            <td>
-             <label name="preco"> Preço</label>
-            <input type="text" name="preco"  placeholder="preço"/>
-           
-            </td>
-            <tr><td> 
-            <input type="submit" value="Cadastrar Produto">
-            </td></tr>
-           </form>
-           <form method="post" action="../../process/produtos/nova_opcao.php" 
-                              enctype="multipart/form-data">
-            <tr><td>
-            <label nome="tabelanovo"> Inserir  Novo</label><br>
-            <select name="tabelanovo">
+                <div class="md:col-span-2">
+                    <label for="preco" class="block text-sm font-medium text-gray-700">Preço</label>
+                    <input id="preco" name="preco" type="text" placeholder="R$ 0,00" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2" />
+                </div>
+                </div>
+
+                <div class="mt-6 flex justify-center">
+                    <input type="submit" value="Cadastrar Produto" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600" />
+                </div>
+            </form> 
+           <form method="post" action="../../process/produtos/nova_opcao.php" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow mt-6">
+                <div>
+                        <label for="tabelanovo" class="block text-sm font-medium text-gray-700">Inserir novo</label> 
+            <select id="tabelanovo" name="tabelanovo" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2">
             <option value="1"> Marca </option>
             <option value="2"> Tamanho Tela  </option>
             <option value="3"> Sistema operacional </option>
@@ -164,18 +161,18 @@
             <option value="5"> Processador </option>
             </select>
 
-            <input type="text" name="nomenovo" placeholder="novo"/>
+            <input id="nomenovo" name="nomenovo" type="text" placeholder="Novo valor" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2" />
 
-            </td></tr>
-            <tr><td> 
-            <input type="submit" value="Cadastrar ">
-            </td></tr>
-  
-         </form>          
-          </table>
+
+                    <div class="md:col-span-3 flex justify-center">
+                        <input type="submit" value="Cadastrar" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600" />
+                    </div>
+                </div>
+            </form>           
+
              
-         </div> 
-        
+         </div>
+	</main>
       </div>
 
 <?php include "../../includes/footer.php"; ?>
