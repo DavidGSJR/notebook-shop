@@ -4,6 +4,7 @@
 	include "../../includes/header.php";
 ?>
 
+	<main class="flex-1">
 		  <div id="conteudo_especifico">
 				  <div class="max-w-4xl mx-auto text-center">
 				<h1 class="text-3xl font-bold text-center text-gray-800">Cadastro de Funcionários</h1>
@@ -44,6 +45,7 @@
 
             </div>
 	  </div>
+	</main>
 
 <?php include "../../includes/footer.php"; ?>
 
