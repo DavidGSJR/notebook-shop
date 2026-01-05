@@ -69,8 +69,6 @@ As imagens abaixo estão centralizadas e exibidas com largura controlada (600px)
   <img src="assets/demo/lista_venda.png" alt="Lista de Vendas" width="600" style="max-width:100%;height:auto;" />
 </p>
 
-> Observação: o vídeo `assets/demo/video_demonstração.mp4` não foi inserido inline para manter o README leve; se desejar, posso adicionar uma miniatura clicável ou gerar um GIF reduzido.
-
 ## Como rodar o projeto
 
 1. Ajuste as credenciais em `config/database.php`.
