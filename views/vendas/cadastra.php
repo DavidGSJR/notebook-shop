@@ -28,22 +28,49 @@
 			<?php
             $conectar = conectar();   
             
-            $sql_consulta = "SELECT *                       
-                     
-                        FROM 
-                        notebooks";                      
-            $resultado_consulta = mysqli_query ($conectar, $sql_consulta);
+            $sql_consulta = "SELECT 
+                                n.id_Note,
+                                n.preco_Note,
+                                m.nome_Marca,
+                                p.nome_Processador,
+                                me.quantidade_Memoria,
+                                t.Tamanho_Tela,
+                                so.nome_So
+                            FROM notebooks n
+                            JOIN marca m ON m.id_Marca = n.id_Marca
+                            JOIN processador p ON p.id_Processador = n.id_Processador
+                            JOIN memoria me ON me.id_Memoria = n.id_Memoria
+                            JOIN tela t ON t.id_Tela = n.id_Tela
+                            JOIN sistemaoperacional so ON so.id_So = n.id_So
+                            WHERE n.id_Vendas IS NULL
+                            ORDER BY n.id_Note";
+                                          
+            $resultado_consulta = mysqli_query($conectar, $sql_consulta);
             
-            $linhas = mysqli_num_rows ($resultado_consulta);
+            $linhas = mysqli_num_rows($resultado_consulta);
 
-            while ($registro_notebook = mysqli_fetch_row($resultado_consulta)) {
-                  ?>
-          <option value="<?php echo htmlspecialchars($registro_notebook[0]); ?>"><?php echo 'ID: '.htmlspecialchars($registro_notebook[0]).' Valor: '.number_format($registro_notebook[1],2,',','.'); ?></option>
-          <?php
-
-          }
-
-          ?>
+            if ($linhas > 0) {
+                while ($registro_notebook = mysqli_fetch_row($resultado_consulta)) {
+                    // Montando a descrição completa do notebook
+                    $descricao = $registro_notebook[2] . ' ' . 
+                                 $registro_notebook[3] . ' ' . 
+                                 $registro_notebook[4] . ' ' . 
+                                 $registro_notebook[5] . '" ' . 
+                                 $registro_notebook[6];
+                    
+                    $valor_formatado = number_format($registro_notebook[1], 2, ',', '.');
+            ?>
+                    <option value="<?php echo htmlspecialchars($registro_notebook[0]); ?>">
+                        <?php echo htmlspecialchars($descricao) . ' - R$ ' . $valor_formatado; ?>
+                    </option>
+            <?php
+                }
+            } else {
+            ?>
+                <option value="">Nenhum notebook disponível para venda</option>
+            <?php
+            }
+            ?>
             </select>
             </div>
             <div>
@@ -66,4 +93,3 @@
 	</main>
 
 <?php include "../../includes/footer.php"; ?>
-

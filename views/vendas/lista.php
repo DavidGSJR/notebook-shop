@@ -20,11 +20,24 @@
 			<?php
 				$conectar = conectar();		
 				
-				$sql_consulta = "SELECT v.id_Vendas, v.data_Vendas, f.nome_Fun, n.preco_Note
-								FROM vendas as v
-								JOIN funcionarios as f ON v.id_Fun = f.id_Fun
-								JOIN notebooks as n ON n.id_Vendas = v.id_Vendas";											
-				$resultado_consulta = mysqli_query ($conectar, $sql_consulta);
+				$sql_consulta = "SELECT 
+					v.id_Vendas,
+					v.data_Vendas,
+					f.nome_Fun,
+					m.nome_Marca,
+					p.nome_Processador,
+					me.quantidade_Memoria,
+					t.Tamanho_Tela,
+					n.preco_Note
+				FROM vendas v
+				JOIN funcionarios f ON f.id_Fun = v.id_Fun
+				JOIN notebooks n ON n.id_Vendas = v.id_Vendas
+				JOIN marca m ON m.id_Marca = n.id_Marca
+				JOIN processador p ON p.id_Processador = n.id_Processador
+				JOIN memoria me ON me.id_Memoria = n.id_Memoria
+				JOIN tela t ON t.id_Tela = n.id_Tela";
+									
+				$resultado_consulta = mysqli_query($conectar, $sql_consulta);
 				
 				$linhas = mysqli_num_rows($resultado_consulta);
 				?>
@@ -32,21 +45,23 @@
 				<?php if ($resultado_consulta && $linhas > 0): ?>
 				<div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 
-					<?php while ($registro = mysqli_fetch_row($resultado_consulta)): ?>
-							<div class="bg-white rounded-lg shadow p-5">
-								<p class="text-sm text-gray-600">ID: <?php echo htmlspecialchars($registro[0]); ?></p>
-								<p class="text-sm text-gray-600">Data: <?php echo date('d/m/Y', strtotime($registro[1])); ?></p>
-								<p class="text-sm text-gray-600">Vendedor: <?php echo htmlspecialchars($registro[2]); ?></p>
-								<p class="text-sm text-gray-600">Valor: R$ <?php echo number_format($registro[3], 2, ',', '.'); ?></p>
-							</div>
-						<?php endwhile; ?>
+					<?php while ($registro = mysqli_fetch_row($resultado_consulta)): 
+						// Montando o nome completo do notebook
+						$nome_notebook = $registro[3] . ' ' . $registro[4] . ' ' . $registro[5] .' '. $registro[6] . '"';
+					?>
+						<div class="bg-white rounded-lg shadow p-5">
+							<p class="text-sm text-gray-600 font-semibold">Notebook: <?php echo htmlspecialchars($nome_notebook); ?></p>
+							<p class="text-sm text-gray-600">Data: <?php echo date('d/m/Y', strtotime($registro[1])); ?></p>
+							<p class="text-sm text-gray-600">Vendedor: <?php echo htmlspecialchars($registro[2]); ?></p>
+							<p class="text-sm text-gray-600">Valor: R$ <?php echo number_format($registro[7], 2, ',', '.'); ?></p>
+						</div>
+					<?php endwhile; ?>
 				</div>
 				<?php else: ?>
 					<p class="text-sm text-gray-600">Ainda não existem vendas cadastradas</p>
 				<?php endif; ?>
-</div>
+			</div>
 		</div>
 	</main>
 
 <?php include "../../includes/footer.php"; ?>
-
